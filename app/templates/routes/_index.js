@@ -37,7 +37,9 @@ exports = module.exports = function(app) {
 	
 	// Views
 	app.get('/', routes.views.index);
-	<% if (includeBlog) { %>app.get('/blog/:category?', routes.views.blog);
+	<% if (includeBlog) { %>
+	app.get('/blog/', routes.views.blogIndex);
+	app.get('/blog/:category?', routes.views.blogCategory);
 	app.get('/blog/post/:post', routes.views.post);
 	<% } %><% if (includeGallery) { %>app.get('/gallery', routes.views.gallery);
 	<% } %><% if (includeEnquiries) { %>app.all('/contact', routes.views.contact);<% } %>

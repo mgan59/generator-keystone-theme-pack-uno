@@ -34,6 +34,26 @@ exports.initLocals = function(req, res, next) {
 	
 	locals.user = req.user;
 	
+	////
+	// Custom Local data for Uno Theme
+	////
+	// emulate the values found in a Ghost configuration menu
+	// used in the title-page
+	locals.blog = {
+		title:'Morgan Craft',
+		// custom field for uno theme
+		subTitle:'NYC Technologist',
+		description:'FullstackJS engineer building distributed cloud technology',
+		// anchor images to root
+		// otherwise they won't work on nested pages `/blog/post/*`
+		cover:'/images/site-cover1.jpg'
+	};
+	// custom values for a theme, in this case coverOverlay is a style setting for Uno
+	locals.theme = {
+		coverOverlay:'sky-blue'
+	};
+	// end local-theme
+	
 	next();
 	
 };

@@ -1,22 +1,26 @@
-var keystone = require('keystone');
+/*
+ *  Duplicate of index to act as an seo landing page at /blog
+ */
+var keystone = require('keystone'),
+	async = require('async');
 
 exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res),
 		locals = res.locals;
-
-	// Set locals.data to support Ghost Theme
+	
+	// Init locals
+	locals.cssOpenPanel = true;  //< for uno-theme to keep side-menu open
+	locals.section = 'blog';
+	locals.filters = {
+		category: req.params.category
+	};
 	locals.data = {
-		posts:[],
-		categories:[]
+		posts: [],
+		categories: []
 	};
 	
-	// locals.section is used to set the currently selected
-	// item in the header navigation.
-	locals.section = 'home';
-	
-	
-	// Load the posts for main index page
+	// Load the posts
 	view.on('init', function(next) {
 		
 		var q = keystone.list('Post').paginate({
@@ -40,6 +44,5 @@ exports = module.exports = function(req, res) {
 	});
 	
 	// Render the view
-	view.render('index');
-	
+	view.render('blog');
 };
