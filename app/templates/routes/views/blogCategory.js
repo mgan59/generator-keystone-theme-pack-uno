@@ -7,6 +7,7 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 	
 	// Init locals
+	locals.cssOpenPanel = true;  //< for uno-theme to keep side-menu open
 	locals.section = 'blog';
 	locals.filters = {
 		category: req.params.category

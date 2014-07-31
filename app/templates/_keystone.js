@@ -9,6 +9,26 @@ var keystone = require('keystone')<% if (viewEngine == 'hbs') { %>,
 	cons = require('consolidate'),
 	nunjucks = require('nunjucks')<% } %>;
 <% if (includeGuideComments) { %>
+// Setup Pathing to allow for Theme Packs
+<% } %>
+
+// include path module
+var Path = require('path');
+// setup some directory theme stubs
+// by default we recommend making a keystone-themes directory
+// that is relative to your keystone installation
+var themeBasePath = Path.join('..', 'keystone-themes');
+// then place each theme into its own directory (recommend this being a git-repo/project)
+var themeSelected = 'uno';
+// now concat for a themeDir
+var themeDir = Path.join(themeBasePath, themeSelected);
+// create a stub for where public will used by keystone to handle static content
+var themePublic = Path.join(themeDir, 'public');
+// create a stub for the views to handoff to hbs engine
+var themeViews = Path.join(themeDir, 'views');
+
+	
+<% if (includeGuideComments) { %>
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -20,9 +40,9 @@ keystone.init({
 	'brand': '<%= projectName %>',
 
 	'less': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
+	'static': themePublic,
+	'favicon': Path.join(themePubluc, 'favicon.ico'),
+	'views': themeViews,
 	<% if (viewEngine === 'nunjucks') { %>
 	'view engine': 'html',
 	'custom engine': cons.nunjucks,
@@ -31,17 +51,17 @@ keystone.init({
 	<% } %>
 	<% if (viewEngine === 'hbs') { %>
 	'custom engine': handlebars.create({
-		layoutsDir: 'templates/views/layouts',
-		partialsDir: 'templates/views/partials',
+		layoutsDir: Path.join(themeViews, 'layouts'),
+		partialsDir: Path.join(themeViews, 'partials'),
 		defaultLayout: 'default',
-		helpers: new require('./templates/views/helpers')(),
+		helpers: new require(Path.join(themeViews, 'helpers'))(),
 		extname: '.<%= viewEngine %>'
 	}).engine,
 	<% } else if ( viewEngine === 'swig' ) { %>
 	'custom engine': swig.renderFile,
 	<% } %>
 	<% if (includeEmail) { %>
-	'emails': 'templates/emails',
+	'emails': Path.join(themeDir, 'emails'),
 	<% } %>
 	'auto update': true,
 	'session': true,

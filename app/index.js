@@ -16,7 +16,7 @@ var KeystoneGenerator = module.exports = function KeystoneGenerator(args, option
 	yeoman.generators.Base.apply(this, arguments);
 	
 	// Welcome
-	console.log('\nWelcome to KeystoneJS.\n');
+	console.log('\nWelcome to KeystoneJS -- Theme Pack Uno.\n');
 	
 	// This callback is fired when the generator has completed,
 	// and includes instructions on what to do next.
@@ -132,6 +132,9 @@ KeystoneGenerator.prototype.prompts = function prompts() {
 		_.each(props, function(val, key) {
 			this[key] = val;
 		}, this);
+		
+		// statically config viewEngine to hbs, easier than removing all code refs
+		this.viewEngine = 'hbs';
 		
 		// Keep an unescaped version of the project name
 		this._projectName = this.projectName;
@@ -347,35 +350,9 @@ KeystoneGenerator.prototype.routes = function routes() {
 KeystoneGenerator.prototype.templates = function templates() {
 	
 	if (this.viewEngine === 'hbs') {
-		
-		// Copy Handlebars Templates
-		
-		this.mkdir('templates');
-		this.mkdir('templates/views');
-		
-		this.directory('templates/default-hbs/views/layouts', 'templates/views/layouts');
-		this.directory('templates/default-hbs/views/helpers', 'templates/views/helpers');
-		this.directory('templates/default-hbs/views/partials', 'templates/views/partials');
-		
-		
-		this.copy('templates/default-hbs/views/index.hbs', 'templates/views/index.hbs');
-		
-		if (this.includeBlog) {
-			this.copy('templates/default-hbs/views/blog.hbs', 'templates/views/blog.hbs');
-			this.copy('templates/default-hbs/views/post.hbs', 'templates/views/post.hbs');
-		}
-		
-		if (this.includeGallery) {
-			this.copy('templates/default-hbs/views/gallery.hbs', 'templates/views/gallery.hbs');
-		}
-		
-		if (this.includeEnquiries) {
-			this.copy('templates/default-hbs/views/contact.hbs', 'templates/views/contact.hbs');
-			if (this.includeEmail) {
-				this.copy('templates/default-hbs/emails/enquiry-notification.hbs', 'templates/emails/enquiry-notification.hbs');
-			}
-		}
-		
+		// do not bind a theme into place
+		// point of theme-packs is to decouple themes from core (no monoliths)
+		return;
 	} else if (this.viewEngine === 'nunjucks') {
 		
 		// Copy Nunjucks Templates
@@ -404,7 +381,6 @@ KeystoneGenerator.prototype.templates = function templates() {
 				this.copy('templates/default-' + this.viewEngine + '/emails/enquiry-notification.html', 'templates/emails/enquiry-notification.html');
 			}
 		}
-		
 	} else {
 		
 		// Copy Jade/Swig Templates
