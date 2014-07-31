@@ -9,11 +9,10 @@ var keystone = require('keystone'),
 <% if (includeGuideComments) { %>
 // Setup Pathing to allow for Theme Packs
 <% } %>
-
 // include path module
 var Path = require('path');
 // setup some directory theme stubs
-// by default we recommend making a keystone-themes directory
+// by default I recommend making a keystone-themes directory
 // that is relative to your keystone installation
 var themeBasePath = Path.join('..', 'keystone-themes');
 // then place each theme into its own directory (recommend this being a git-repo/project)
@@ -38,7 +37,7 @@ keystone.init({
 
 	'less': 'public',
 	'static': themePublic,
-	'favicon': Path.join(themePubluc, 'favicon.ico'),
+	'favicon': Path.join(themePublic, 'favicon.ico'),
 	'views': themeViews,
 	'view engine': '<%= viewEngine %>',
 	'custom engine': handlebars.create({

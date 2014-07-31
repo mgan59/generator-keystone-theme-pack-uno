@@ -79,10 +79,6 @@ KeystoneGenerator.prototype.prompts = function prompts() {
 				message: 'What is the name of your project?',
 				default: 'My Site'
 			}, {
-				name: 'viewEngine',
-				message: 'Would you like to use Jade, Swig, Nunjucks or Handlebars for templates? ' + (('[jade | swig | nunjucks | hbs]').grey),
-				default: 'jade'
-			}, {
 				type: 'confirm',
 				name: 'includeBlog',
 				message: 'Would you like to include a Blog?',
@@ -335,6 +331,9 @@ KeystoneGenerator.prototype.routes = function routes() {
 	if (this.includeBlog) {
 		this.copy('routes/views/blog.js');
 		this.copy('routes/views/post.js');
+		// adding two additional view routes for uno
+		this.copy('routes/views/blogIndex.js');
+		this.copy('routes/views/blogCategory.js');
 	}
 	
 	if (this.includeGallery) {
