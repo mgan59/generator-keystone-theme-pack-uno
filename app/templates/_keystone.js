@@ -8,14 +8,14 @@ var keystone = require('keystone')<% if (viewEngine == 'hbs') { %>,
 	swig = require('swig')<% } else if (viewEngine == 'nunjucks') { %>,
 	cons = require('consolidate'),
 	nunjucks = require('nunjucks')<% } %>;
+
 <% if (includeGuideComments) { %>
 // Setup Pathing to allow for Theme Packs
 <% } %>
-
 // include path module
 var Path = require('path');
 // setup some directory theme stubs
-// by default we recommend making a keystone-themes directory
+// by default I recommend making a keystone-themes directory
 // that is relative to your keystone installation
 var themeBasePath = Path.join('..', 'keystone-themes');
 // then place each theme into its own directory (recommend this being a git-repo/project)
@@ -41,7 +41,7 @@ keystone.init({
 
 	'less': 'public',
 	'static': themePublic,
-	'favicon': Path.join(themePubluc, 'favicon.ico'),
+	'favicon': Path.join(themePublic, 'favicon.ico'),
 	'views': themeViews,
 	<% if (viewEngine === 'nunjucks') { %>
 	'view engine': 'html',
